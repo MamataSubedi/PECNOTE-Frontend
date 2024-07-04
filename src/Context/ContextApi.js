@@ -1,4 +1,6 @@
-import { useState, useEffect, useContext, createContext } from "react";
+// src/Context/ContextApi.js
+import React, { useState, useEffect, useContext, createContext } from "react";
+//import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -7,10 +9,12 @@ export const AuthProvider = ({ children }) => {
     user: {
       fullName: "",
       email: "",
+      following:"",
+      follower:""
     },
     token: "",
   });
- 
+
   useEffect(() => {
     const data = localStorage.getItem("auth");
     if (data) {
@@ -24,17 +28,23 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  
+
   return (
-    <AuthContext.Provider value={[auth, setAuth]}>
+    <AuthContext.Provider value={{ auth, setAuth,
+    // getUser 
+     }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => {
-  const authContextValue = useContext(AuthContext);
-  if (!authContextValue) {
-    throw new Error("useAuth used outside of the Provider");
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
   }
-  return authContextValue;
+  // return context;
+  const { auth, setAuth } = context;
+  return [auth, setAuth]; 
 };

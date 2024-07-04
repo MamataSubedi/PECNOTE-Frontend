@@ -3,21 +3,27 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {AuthProvider} from './Context/ContextApi';
+import { AuthProvider } from './Context/ContextApi';
 import { SearchProvider } from './Context/Search';
 import { CartProvider } from './Context/Cart';
+import { ChatProvider } from './Context/ChatContext';
+import { MessageProvider } from './Context/MessageContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AuthProvider>
-  <SearchProvider>
-  <CartProvider>
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-  </CartProvider>
-  </SearchProvider>
+    <SearchProvider>
+      <CartProvider>
+        <ChatProvider>
+          <MessageProvider>
+            <React.StrictMode>
+              <App />
+            </React.StrictMode>
+          </MessageProvider>
+        </ChatProvider>
+      </CartProvider>
+    </SearchProvider>
   </AuthProvider>
 );
 
